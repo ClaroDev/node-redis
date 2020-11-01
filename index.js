@@ -60,9 +60,9 @@ async function getPopulation(req, res) {
 //Request to weather api
 async function getWeather(capital) {
     try {
-        capital = removeDiacritics(capital);
+        capitalRemoveDiacritics = removeDiacritics(capital);
         console.log(`Fetching Weather for ${capital}...`);
-        var responseWeather = await fetch(`http://api.weatherstack.com/current?access_key=3a437c431d29ed9cbb2cc68388bce31e&query=${capital}`);
+        var responseWeather = await fetch(`http://api.weatherstack.com/current?access_key=3a437c431d29ed9cbb2cc68388bce31e&query=${capitalRemoveDiacritics}`);
         const weather = await responseWeather.json();
         return weather.current.temperature;
          
