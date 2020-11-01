@@ -2,7 +2,7 @@ const express = require('express');
 const fetch = require('node-fetch');
 const redis = require('redis');
 const cors = require('cors');
-
+var removeDiacritics = require('diacritics').remove;
 
 const PORT = process.env.PORT || 5000;
 const REDIS_PORT = process.env.PORT || 6379;
@@ -60,8 +60,8 @@ async function getPopulation(req, res) {
 //Request to weather api
 async function getWeather(capital) {
     try {
+        capital = removeDiacritics(capital);
         console.log(`Fetching Weather for ${capital}...`);
-    
         var responseWeather = await fetch(`http://api.weatherstack.com/current?access_key=3a437c431d29ed9cbb2cc68388bce31e&query=${capital}`);
         const weather = await responseWeather.json();
         return weather.current.temperature;
